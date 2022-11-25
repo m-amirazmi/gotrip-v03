@@ -12,6 +12,7 @@ import { HeaderContainer } from '../components/header/header-container';
 import getConfig from 'next/config';
 import { IHomepage } from '../utils/interfaces';
 import { HeroSearch } from '../components/homepage/hero/hero-search';
+import { Promises } from '../components/homepage/promises';
 const { publicRuntimeConfig } = getConfig();
 
 export default function Home({ currencies, languages, locations }: IHomepage) {
@@ -30,6 +31,12 @@ export default function Home({ currencies, languages, locations }: IHomepage) {
 				<HeroSearch locations={locations} />
 			</HeroContainer>
 			<HeroBg />
+
+			{/* HIDE FOR MOBILE */}
+			<div className="hidden sm:block">
+				<Promises />
+				<div>Here is it</div>
+			</div>
 		</>
 	);
 }
