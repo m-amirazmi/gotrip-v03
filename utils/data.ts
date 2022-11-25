@@ -17,3 +17,11 @@ export const languages = [
 	{ id: '4', name: 'English', country: 'United Kingdom', code: 'en_GB', flag: 'gb.svg' },
 	{ id: '5', name: 'English', country: 'United States', code: 'en_US', flag: 'us.svg' },
 ];
+
+export const locations = [
+	{ id: '1', region: 'Ampang', state: 'Selangor' },
+	{ id: '2', region: 'Gombak', state: 'Selangor' },
+	{ id: '3', region: 'KLCC', state: 'Kuala Lumpur' },
+	{ id: '4', region: 'Petaling Jaya', state: 'Selangor' },
+	{ id: '5', region: 'Damansara', state: 'Selangor' },
+];

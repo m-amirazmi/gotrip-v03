@@ -16,7 +16,7 @@ export default function DatePicker({ range, setRange }: IDatePicker) {
 						font-weight:500 !important;
 					}
 					.rdp-day_range_start, .rdp-day_range_end {
-						background: #3554D1 !important;
+						background: #13357B !important;
 						border-radius:100px !important;
 					}
 					.rdp-cell{position:relative;}
@@ -53,7 +53,7 @@ export default function DatePicker({ range, setRange }: IDatePicker) {
 					}
 				`}</style>
 			</Head>
-			<DayPicker className="text-text-color-1" numberOfMonths={2} mode="range" defaultMonth={new Date()} selected={range} onSelect={setRange} disabled={{ before: new Date() }} />
+			<DayPicker className="text-sm text-text-color-1" numberOfMonths={2} mode="range" defaultMonth={new Date()} selected={range} onSelect={setRange} disabled={{ before: new Date() }} />
 		</>
 	);
 }

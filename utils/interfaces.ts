@@ -1,6 +1,10 @@
 import { ReactElement } from 'react';
-
-export interface ICurrencies {
+export interface IGuest {
+	adults: number;
+	children: number;
+	rooms: number;
+}
+export interface ICurrency {
 	id: string;
 	code: string;
 	name: string;
@@ -10,12 +14,20 @@ export interface ICurrencies {
 	updated_at?: string;
 }
 
-export interface ILanguages {
+export interface ILanguage {
 	id: string;
 	code: string;
 	name: string;
 	country: string;
 	flag: string;
+	created_at?: string;
+	updated_at?: string;
+}
+
+export interface ILocation {
+	id: string;
+	region: string;
+	state: string;
 	created_at?: string;
 	updated_at?: string;
 }
@@ -36,19 +48,24 @@ export interface IAPICurrencies {
 }
 
 export interface IHomepage {
-	currencies: ICurrencies[];
-	languages: ILanguages[];
+	currencies: ICurrency[];
+	languages: ILanguage[];
+	locations: ILocation[];
 }
 
 export interface IHeaderCurrLang {
-	currencies: ICurrencies[];
-	languages: ILanguages[];
-	selectedCurrency?: ICurrencies;
-	selectedLanguage?: ILanguages;
+	currencies: ICurrency[];
+	languages: ILanguage[];
+	selectedCurrency?: ICurrency;
+	selectedLanguage?: ILanguage;
 	handleShow?: () => void;
 	handleSelected?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export interface IHeaderContainer {
 	children: ReactElement[];
+}
+
+export interface IHeroSearch {
+	locations: ILocation[];
 }

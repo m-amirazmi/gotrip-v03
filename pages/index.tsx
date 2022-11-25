@@ -14,7 +14,7 @@ import { IHomepage } from '../utils/interfaces';
 import { HeroSearch } from '../components/homepage/hero/hero-search';
 const { publicRuntimeConfig } = getConfig();
 
-export default function Home({ currencies, languages }: IHomepage) {
+export default function Home({ currencies, languages, locations }: IHomepage) {
 	return (
 		<>
 			<HeaderContainer>
@@ -27,7 +27,7 @@ export default function Home({ currencies, languages }: IHomepage) {
 			<HeroContainer>
 				<HeroContent />
 				<HeroImages />
-				<HeroSearch />
+				<HeroSearch locations={locations} />
 			</HeroContainer>
 			<HeroBg />
 		</>
@@ -35,14 +35,19 @@ export default function Home({ currencies, languages }: IHomepage) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const [resCurrencies, resLanguages] = await Promise.all([await axios.get(publicRuntimeConfig.DOMAIN_API + '/currencies'), await axios.get(publicRuntimeConfig.DOMAIN_API + '/languages')]);
+	const [resCurrencies, resLanguages, resLocations] = await Promise.all([
+		await axios.get(publicRuntimeConfig.DOMAIN_API + '/currencies'),
+		await axios.get(publicRuntimeConfig.DOMAIN_API + '/languages'),
+		await axios.get(publicRuntimeConfig.DOMAIN_API + '/locations'),
+	]);
 
 	const { data: currencies } = resCurrencies;
 	const { data: languages } = resLanguages;
+	const { data: locations } = resLocations;
 
 	if (currencies.status && languages.status) {
 		return {
-			props: { currencies: currencies.data, languages: languages.data },
+			props: { currencies: currencies.data, languages: languages.data, locations: locations.data },
 		};
 	}
 	return { props: {}, notFound: true };

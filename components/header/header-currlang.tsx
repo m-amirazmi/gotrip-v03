@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import React, { FC, useEffect, useState } from 'react';
-import { ICurrencies, IHeaderCurrLang, ILanguages } from '../../utils/interfaces';
+import { ICurrency, IHeaderCurrLang, ILanguage } from '../../utils/interfaces';
 import { CurrLangPopup } from './header-currlang-popup';
 import cookie from 'js-cookie';
 
 export const HeaderCurrLang: FC<IHeaderCurrLang> = ({ currencies, languages }) => {
 	const [show, setShow] = useState(false);
-	const [selectedCurrency, setSelectedCurrency] = useState<ICurrencies>();
-	const [selectedLanguage, setSelectedLanguage] = useState<ILanguages>();
+	const [selectedCurrency, setSelectedCurrency] = useState<ICurrency>();
+	const [selectedLanguage, setSelectedLanguage] = useState<ILanguage>();
 
 	useEffect(() => {
 		const getCookieCurrency = cookie.get('currency');
