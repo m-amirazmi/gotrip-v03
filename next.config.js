@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+	publicRuntimeConfig: {
+		DOMAIN: process.env.DOMAIN,
+		DOMAIN_API: process.env.DOMAIN_API,
+	},
+	reactStrictMode: true,
+	swcMinify: true,
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
