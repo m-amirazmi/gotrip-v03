@@ -11,6 +11,7 @@ import { HeroImages } from '../components/homepage/hero/hero-images';
 import { HeaderContainer } from '../components/header/header-container';
 import getConfig from 'next/config';
 import { IHomepage } from '../utils/interfaces';
+import { HeroSearch } from '../components/homepage/hero/hero-search';
 const { publicRuntimeConfig } = getConfig();
 
 export default function Home({ currencies, languages }: IHomepage) {
@@ -26,6 +27,7 @@ export default function Home({ currencies, languages }: IHomepage) {
 			<HeroContainer>
 				<HeroContent />
 				<HeroImages />
+				<HeroSearch />
 			</HeroContainer>
 			<HeroBg />
 		</>

@@ -6,9 +6,9 @@ export const CurrLangPopup: FC<IHeaderCurrLang> = ({ currencies, languages, sele
 	if (!currencies) return null;
 
 	return (
-		<div className="fixed top-0 left-0 z-30 h-screen w-screen">
+		<div className="fixed top-0 left-0 h-screen w-screen">
 			<div className="h-full w-full bg-black bg-opacity-50"></div>
-			<div className="absolute top-1/2 left-1/2 z-40 w-full -translate-x-1/2 -translate-y-1/2 px-3 sm:w-[600px] sm:px-0">
+			<div className="absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 px-3 sm:w-[600px] sm:px-0">
 				<div className=" flex  flex-col rounded bg-white text-black">
 					<div>
 						<div className="mb-2 flex items-center justify-between border-b px-6 py-3 pb-2 text-base sm:px-6 sm:py-6 sm:pb-4 sm:text-lg">
