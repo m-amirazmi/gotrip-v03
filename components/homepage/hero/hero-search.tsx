@@ -1,14 +1,41 @@
 import { FC, useEffect, useState } from 'react';
+import { DateRange } from 'react-day-picker';
 import DatePicker from '../../general/datepicker';
+
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const presetDate = { day: '', date: '', month: '', year: '' };
 
 export const HeroSearch: FC = () => {
 	const [open, setOpen] = useState('');
 	const [selectedLocation, setSelectedLocation] = useState({ id: 0, region: '', state: '' });
-	const [selectedDate, setSelectedDate] = useState({ start: new Date(), end: new Date() });
+	const [selectedDate, setSelectedDate] = useState<DateRange | undefined>();
+	const [convertedDate, setConvertedDate] = useState({ from: { ...presetDate }, to: { ...presetDate } });
 
 	useEffect(() => {
-		if (open) document.addEventListener('click', (e: any) => e.target.name !== open && !e.target.name && setOpen(''));
+		if (open) {
+			document.addEventListener('click', (e: any) => {
+				if (!e.target.closest('#hero-search')) e.target.name !== open && !e.target.name && setOpen('');
+			});
+		}
 	}, [open]);
+
+	useEffect(() => {
+		if (selectedDate && selectedDate.from && selectedDate.to) {
+			const from = { ...presetDate };
+			const to = { ...presetDate };
+			from.date = new Date(selectedDate.from).getDate().toString();
+			from.day = days[new Date(selectedDate.from).getDay()];
+			from.month = months[new Date(selectedDate.from).getMonth()];
+			from.year = new Date(selectedDate.from).getFullYear().toString();
+			to.date = new Date(selectedDate.to).getDate().toString();
+			to.day = days[new Date(selectedDate.to).getDay()];
+			to.month = months[new Date(selectedDate.to).getMonth()];
+			to.year = new Date(selectedDate.to).getFullYear().toString();
+
+			setConvertedDate({ from, to });
+		}
+	}, [selectedDate]);
 
 	const handleOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
 		if (open === e.currentTarget.name) setOpen('');
@@ -21,8 +48,10 @@ export const HeroSearch: FC = () => {
 		// setOpen('');
 	};
 
+	console.log(convertedDate);
+
 	return (
-		<div className="absolute bottom-[13%] z-[9] hidden w-full text-base md:block">
+		<div id="hero-search" className="absolute bottom-[13%] z-[9] hidden w-full text-base md:block">
 			<div className="relative flex w-11/12 rounded bg-white p-3 text-text-color-1 shadow-xl lg:w-8/12">
 				<div className="relative w-1/3 border-r pl-3">
 					<div>Location</div>
@@ -62,14 +91,27 @@ export const HeroSearch: FC = () => {
 					<div className="relative">
 						<div>Check in - Check out</div>
 						<button name="date" onClick={handleOpen} className="mt-1 w-full cursor-pointer text-left text-text-color-2 focus:outline-none">
-							{'Wed 2 Mar - Fri 11 Apr'}
+							{selectedDate && convertedDate.from && convertedDate.to ? (
+								<>
+									<span>
+										{convertedDate.from.day} {convertedDate.from.date} {convertedDate.from.month}{' '}
+										{new Date().getFullYear() !== +convertedDate.from.year ? convertedDate.from.year : ''}
+									</span>
+									<span> - </span>
+									<span>
+										{convertedDate.to.day} {convertedDate.to.date} {convertedDate.to.month} {new Date().getFullYear() !== +convertedDate.to.year ? convertedDate.to.year : ''}
+									</span>
+								</>
+							) : (
+								'Wed 2 Mar - Fri 11 Apr'
+							)}
 						</button>
 						{open === 'date' && <div className="absolute -top-5 left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 bg-white"></div>}
 					</div>
 					{open === 'date' && (
 						<div className="w-f absolute left-1/2 bottom-20 mb-3 w-fit -translate-x-1/2 rounded bg-white">
 							<div className="p-4">
-								<DatePicker />
+								<DatePicker range={selectedDate} setRange={setSelectedDate} />
 							</div>
 						</div>
 					)}

@@ -1,33 +1,13 @@
-import React, { useState } from 'react';
-import { addDays, format } from 'date-fns';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { DateRange, DayPicker } from 'react-day-picker';
 import Head from 'next/head';
 
-const pastMonth = new Date();
+interface IDatePicker {
+	range: DateRange | undefined;
+	setRange: Dispatch<SetStateAction<DateRange | undefined>>;
+}
 
-export default function DatePicker() {
-	// const defaultSelected: DateRange = {
-	// 	from: pastMonth,
-	// 	to: addDays(pastMonth, 4),
-	// };
-
-	const [range, setRange] = useState<DateRange | undefined>();
-
-	console.log(range);
-
-	// let footer = <p>Please pick the first day.</p>;
-	// if (range?.from) {
-	// 	if (!range.to) {
-	// 		footer = <p>{format(range.from, 'PPP')}</p>;
-	// 	} else if (range.to) {
-	// 		footer = (
-	// 			<p>
-	// 				{format(range.from, 'PPP')}–{format(range.to, 'PPP')}
-	// 			</p>
-	// 		);
-	// 	}
-	// }
-
+export default function DatePicker({ range, setRange }: IDatePicker) {
 	return (
 		<>
 			<Head>
@@ -73,7 +53,7 @@ export default function DatePicker() {
 					}
 				`}</style>
 			</Head>
-			<DayPicker className="text-text-color-1" numberOfMonths={2} mode="range" defaultMonth={pastMonth} selected={range} onSelect={setRange} disabled={{ before: new Date() }} />
+			<DayPicker className="text-text-color-1" numberOfMonths={2} mode="range" defaultMonth={new Date()} selected={range} onSelect={setRange} disabled={{ before: new Date() }} />
 		</>
 	);
 }
