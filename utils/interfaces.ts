@@ -32,6 +32,73 @@ export interface ILocation {
 	updated_at?: string;
 }
 
+export interface IMeta {
+	title: string;
+	subtitle: string;
+	happy_people: string | undefined;
+	overall_rating: number | undefined;
+}
+
+export interface IPromise {
+	id: string;
+	name: string;
+	description: string;
+	image: string;
+	created_at?: string;
+	updated_at?: string;
+}
+
+export interface IPopularDestinations {
+	meta: IMeta;
+	values: {
+		id: string;
+		country: string;
+		travellers_no: number;
+		image: string;
+	}[];
+	created_at?: string;
+	updated_at?: string;
+}
+
+export interface IBestsellers {
+	meta: IMeta;
+	values: {
+		id: string;
+		name: string;
+		location: {
+			region: string;
+			state: string;
+		};
+		no_rating: number;
+		no_reviews: number;
+		price_start: number;
+		tags: string[];
+	}[];
+}
+
+export interface IFeaturedReviews {
+	meta: IMeta;
+	values: {
+		id: string;
+		hotel: string;
+		rating: number;
+		description: string;
+		reviewer_img: string;
+		reviewer_name: string;
+		reviewer_job: string;
+	}[];
+}
+
+export interface IFeaturedArticles {
+	meta: IMeta;
+	values: {
+		id: string;
+		title: string;
+		created_at: number;
+		image: string;
+	}[];
+}
+
 export interface IAPICurrencies {
 	status: boolean;
 	data: [
@@ -51,6 +118,13 @@ export interface IHomepage {
 	currencies: ICurrency[];
 	languages: ILanguage[];
 	locations: ILocation[];
+	homepage: {
+		promises: IPromise[];
+		popular_destinations: IPopularDestinations;
+		bestsellers: IBestsellers;
+		featured_reviews: IFeaturedReviews;
+		featured_articles: IFeaturedArticles;
+	};
 }
 
 export interface IHeaderCurrLang {

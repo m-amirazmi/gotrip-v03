@@ -1,12 +1,19 @@
 import Image from 'next/image';
 import { FC } from 'react';
 import { promises } from '../../utils/data';
+import { IPromise } from '../../utils/interfaces';
 
-export const Promises: FC = () => {
+interface IPromisesProps {
+	data: IPromise[];
+}
+
+export const Promises: FC<IPromisesProps> = ({ data }) => {
+	console.log(data);
+	if (!data || data.length === 0) return null;
 	return (
 		<div className="mx-auto my-16 px-4 lg:px-8 xl:container xl:px-0">
 			<div className="grid grid-cols-3 gap-8">
-				{promises.map((p) => {
+				{data.map((p) => {
 					return (
 						<div key={p.id}>
 							<div className="flex flex-col items-center justify-center rounded p-12 transition-all hover:shadow-xl">

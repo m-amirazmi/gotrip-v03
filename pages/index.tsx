@@ -1,5 +1,4 @@
 import { GetServerSideProps } from 'next';
-import axios from 'axios';
 import { HeaderAuth } from '../components/header/header-auth';
 import { HeaderCurrLang } from '../components/header/header-currlang';
 import { HeaderLogo } from '../components/header/header-logo';
@@ -9,13 +8,13 @@ import { HeroContainer } from '../components/homepage/hero/hero-container';
 import { HeroContent } from '../components/homepage/hero/hero-content';
 import { HeroImages } from '../components/homepage/hero/hero-images';
 import { HeaderContainer } from '../components/header/header-container';
-import getConfig from 'next/config';
 import { IHomepage } from '../utils/interfaces';
 import { HeroSearch } from '../components/homepage/hero/hero-search';
 import { Promises } from '../components/homepage/promises';
-const { publicRuntimeConfig } = getConfig();
+import { PopularDestinations } from '../components/homepage/popular-destinations';
+import { fetchData } from '../utils/helpers';
 
-export default function Home({ currencies, languages, locations }: IHomepage) {
+export default function Home({ currencies, languages, locations, homepage }: IHomepage) {
 	return (
 		<>
 			<HeaderContainer>
@@ -34,28 +33,32 @@ export default function Home({ currencies, languages, locations }: IHomepage) {
 
 			{/* HIDE FOR MOBILE */}
 			<div className="hidden sm:block">
-				<Promises />
-				<div>Here is it</div>
+				<Promises data={homepage?.promises} />
+				<PopularDestinations />
 			</div>
 		</>
 	);
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const [resCurrencies, resLanguages, resLocations] = await Promise.all([
-		await axios.get(publicRuntimeConfig.DOMAIN_API + '/currencies'),
-		await axios.get(publicRuntimeConfig.DOMAIN_API + '/languages'),
-		await axios.get(publicRuntimeConfig.DOMAIN_API + '/locations'),
+	const [resCurrencies, resLanguages, resLocations, resHomepage] = await Promise.all([
+		await fetchData('/currencies'),
+		await fetchData('/languages'),
+		await fetchData('/locations'),
+		await fetchData('/homepage'),
 	]);
 
 	const { data: currencies } = resCurrencies;
 	const { data: languages } = resLanguages;
 	const { data: locations } = resLocations;
+	const { data: homepage } = resHomepage;
 
-	if (currencies.status && languages.status) {
-		return {
-			props: { currencies: currencies.data, languages: languages.data, locations: locations.data },
-		};
-	}
-	return { props: {}, notFound: true };
+	return {
+		props: {
+			currencies: currencies.data,
+			languages: languages.data,
+			locations: locations.data,
+			homepage: homepage.data || null,
+		},
+	};
 };

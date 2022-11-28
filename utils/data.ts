@@ -47,7 +47,7 @@ export const promises = [
 	},
 ];
 
-export const destinations = {
+export const popular_destinations = {
 	meta: { title: 'Connect With Other Travellers', subtitle: 'These popular destinations have a lot to offer' },
 	values: [
 		{ id: '1', country: 'United Kingdom', travellers_no: 147681, image: '' },
